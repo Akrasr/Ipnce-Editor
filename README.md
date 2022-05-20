@@ -12,7 +12,7 @@ Since AJ, AAI and AAI2 were originally made for DS, Capcom decided to port this 
 This drawing system has 3 files that has the same purposes as in Nintendo DS:
 1. TexIdxEx (the same as NCGR except for a fact that titles look normal)
 2. ColorPlteEx (it's a palette image)
-3. Ipnce (a file that has the same purposes as NCER and NANR at the same time)
+3. Ipnce (a file that has the same purposes as NCER and NANR at the same time)<br>
 This system can be seen in lots of textures in mobile port. You can find the textures with the names like "XXX_TexIdxEx" and "XXX_ColorPlteEx" and the monobehaviour file with the name "XXX". (XXX - is the name of texture). This "XXX" monobehaviour file is Ipnce.<br>
 These three files are parts of this sprite drawing system and are used with each other. Sometimes these sprites are already colored and instead of "XXX_TexIdxEx" they have name like "XXX_Direct16". These files do not have a color palette for them, but they have an ipnce file with them.
 
