@@ -7,6 +7,7 @@ As you may probably know, Nintendo DS uses four types of files to draw an image 
 2. Palette (it's used for coloring an image)
 3. NCER (a file that is responsible for placing tiles in roght places)
 4. NANR (file that contains information about sprite animations)
+#
 Since AJ, AAI and AAI2 were originally made for DS, Capcom decided to port this drawing system into Unity mobile ports of these games.<br>
 This drawing system has 3 files that has the same purposes as in Nintendo DS:
 1. TexIdxEx (the same as NCGR except for a fact that titles look normal)
