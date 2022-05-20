@@ -35,4 +35,4 @@ But after that, you will need to edit the Unity file header data with some hex e
 Header is 32 bytes long.
 
 # TexIdxEx textures are uncolored and trying to redraw them with saving color palette is a mess. Is there any way to do that easily?
-You can use Palette Applier () tool to add colors to the TexIdxEx image that you want. Then you can edit this colored Image and then uncolor it back with Palette Applier by pressing a Decolor flag.
+You can use Palette Applier (https://github.com/Akrasr/Palette-Applier/tree/main) tool to add colors to the TexIdxEx image that you want. Then you can edit this colored Image and then uncolor it back with Palette Applier by pressing a Decolor flag.
