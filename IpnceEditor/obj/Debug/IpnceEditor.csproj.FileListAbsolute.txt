@@ -1,0 +1,10 @@
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.exe.config
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.exe
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.pdb
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.Form1.resources
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.Properties.Resources.resources
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.GenerateResource.cache
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.CoreCompileInputs.cache
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.exe
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.pdb
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.AssemblyReference.cache
