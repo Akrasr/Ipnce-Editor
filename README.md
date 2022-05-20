@@ -31,7 +31,8 @@ While saving an Ipnce you can press Save As "the game you want implement it to" 
 But after that, you will need to edit the Unity file header data with some hex editor. For example, if you want to copy "REBUTTAL" animation from AAI1 to AAI2 you must: 
 1. Press "Save As AAI2" button and save ipnce
 2. Then open original "REBUTTAL" ipnce from AAI2 and copy header bytes from it
-3. Replace header bytes of the file you saved with the bytes you have copied.
+3. Replace header bytes of the file you saved with the bytes you have copied.<br>
+Header is 32 bytes long.
 
 # TexIdxEx textures are uncolored and trying to redraw them with saving color palette is a mess. Is there any way to do that easily?
 You can use Palette Applier () tool to add colors to the TexIdxEx image that you want. Then you can edit this colored Image and then uncolor it back with Palette Applier by pressing a Decolor flag.
