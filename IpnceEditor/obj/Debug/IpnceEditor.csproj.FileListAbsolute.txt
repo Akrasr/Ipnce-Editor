@@ -8,3 +8,7 @@ C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.cspro
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.exe
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.pdb
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.AssemblyReference.cache
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\AnimatedGif.dll
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\System.Drawing.Common.dll
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.CopyComplete
+C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.Form2.resources

@@ -31,6 +31,21 @@ namespace IpnceEditor
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsAAI2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsAAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsAJToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spritePartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animKeyframeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setBackgroundImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetBackgroundImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setGreenScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
@@ -56,12 +71,9 @@ namespace IpnceEditor
             this.label10 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label11 = new System.Windows.Forms.Label();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsAAI2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsAAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsAJToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -70,13 +82,132 @@ namespace IpnceEditor
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.addToolStripMenuItem,
+            this.backgroundToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1213, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.saveAsAAI2ToolStripMenuItem,
+            this.saveAsAAIToolStripMenuItem,
+            this.saveAsAJToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsAAI2ToolStripMenuItem
+            // 
+            this.saveAsAAI2ToolStripMenuItem.Name = "saveAsAAI2ToolStripMenuItem";
+            this.saveAsAAI2ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.saveAsAAI2ToolStripMenuItem.Text = "Save As AAI2 Ipnce";
+            this.saveAsAAI2ToolStripMenuItem.Click += new System.EventHandler(this.saveAsAAI2ToolStripMenuItem_Click);
+            // 
+            // saveAsAAIToolStripMenuItem
+            // 
+            this.saveAsAAIToolStripMenuItem.Name = "saveAsAAIToolStripMenuItem";
+            this.saveAsAAIToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.saveAsAAIToolStripMenuItem.Text = "Save As AAI Ipnce";
+            this.saveAsAAIToolStripMenuItem.Click += new System.EventHandler(this.saveAsAAIToolStripMenuItem_Click);
+            // 
+            // saveAsAJToolStripMenuItem
+            // 
+            this.saveAsAJToolStripMenuItem.Name = "saveAsAJToolStripMenuItem";
+            this.saveAsAJToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.saveAsAJToolStripMenuItem.Text = "Save As AJ Ipnce";
+            this.saveAsAJToolStripMenuItem.Click += new System.EventHandler(this.saveAsAJToolStripMenuItem_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spriteToolStripMenuItem,
+            this.spritePartToolStripMenuItem,
+            this.animToolStripMenuItem,
+            this.animKeyframeToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // spriteToolStripMenuItem
+            // 
+            this.spriteToolStripMenuItem.Name = "spriteToolStripMenuItem";
+            this.spriteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.spriteToolStripMenuItem.Text = "Sprite";
+            this.spriteToolStripMenuItem.Click += new System.EventHandler(this.spriteToolStripMenuItem_Click);
+            // 
+            // spritePartToolStripMenuItem
+            // 
+            this.spritePartToolStripMenuItem.Name = "spritePartToolStripMenuItem";
+            this.spritePartToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.spritePartToolStripMenuItem.Text = "Sprite Part";
+            this.spritePartToolStripMenuItem.Click += new System.EventHandler(this.spritePartToolStripMenuItem_Click);
+            // 
+            // animToolStripMenuItem
+            // 
+            this.animToolStripMenuItem.Name = "animToolStripMenuItem";
+            this.animToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.animToolStripMenuItem.Text = "Anim";
+            this.animToolStripMenuItem.Click += new System.EventHandler(this.animToolStripMenuItem_Click);
+            // 
+            // animKeyframeToolStripMenuItem
+            // 
+            this.animKeyframeToolStripMenuItem.Name = "animKeyframeToolStripMenuItem";
+            this.animKeyframeToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.animKeyframeToolStripMenuItem.Text = "Anim Keyframe";
+            this.animKeyframeToolStripMenuItem.Click += new System.EventHandler(this.animKeyframeToolStripMenuItem_Click);
+            // 
+            // backgroundToolStripMenuItem
+            // 
+            this.backgroundToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setBackgroundImageToolStripMenuItem,
+            this.resetBackgroundImageToolStripMenuItem,
+            this.setGreenScreenToolStripMenuItem});
+            this.backgroundToolStripMenuItem.Name = "backgroundToolStripMenuItem";
+            this.backgroundToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.backgroundToolStripMenuItem.Text = "Background";
+            // 
+            // setBackgroundImageToolStripMenuItem
+            // 
+            this.setBackgroundImageToolStripMenuItem.Name = "setBackgroundImageToolStripMenuItem";
+            this.setBackgroundImageToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.setBackgroundImageToolStripMenuItem.Text = "Set Background Image";
+            this.setBackgroundImageToolStripMenuItem.Click += new System.EventHandler(this.setBackgroundImageToolStripMenuItem_Click);
+            // 
+            // resetBackgroundImageToolStripMenuItem
+            // 
+            this.resetBackgroundImageToolStripMenuItem.Name = "resetBackgroundImageToolStripMenuItem";
+            this.resetBackgroundImageToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.resetBackgroundImageToolStripMenuItem.Text = "Reset Background Image";
+            this.resetBackgroundImageToolStripMenuItem.Click += new System.EventHandler(this.resetBackgroundImageToolStripMenuItem_Click);
+            // 
+            // setGreenScreenToolStripMenuItem
+            // 
+            this.setGreenScreenToolStripMenuItem.Name = "setGreenScreenToolStripMenuItem";
+            this.setGreenScreenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.setGreenScreenToolStripMenuItem.Text = "Set Green Screen";
+            this.setGreenScreenToolStripMenuItem.Click += new System.EventHandler(this.setGreenScreenToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -85,9 +216,9 @@ namespace IpnceEditor
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.Silver;
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(518, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(518, 48);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(734, 565);
+            this.pictureBox1.Size = new System.Drawing.Size(683, 528);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -298,73 +429,59 @@ namespace IpnceEditor
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(518, 624);
+            this.trackBar1.Location = new System.Drawing.Point(518, 609);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(734, 45);
+            this.trackBar1.Size = new System.Drawing.Size(683, 45);
             this.trackBar1.TabIndex = 23;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(525, 602);
+            this.label11.Location = new System.Drawing.Point(515, 590);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(48, 13);
             this.label11.TabIndex = 24;
             this.label11.Text = "Frame: 0";
             // 
-            // openToolStripMenuItem
+            // button3
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.button3.Location = new System.Drawing.Point(417, 49);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(69, 40);
+            this.button3.TabIndex = 25;
+            this.button3.Text = "Save Screenshot";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // saveToolStripMenuItem
+            // button4
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.button4.Location = new System.Drawing.Point(417, 120);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(69, 47);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "Save GIF";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // saveAsAAI2ToolStripMenuItem
+            // button5
             // 
-            this.saveAsAAI2ToolStripMenuItem.Name = "saveAsAAI2ToolStripMenuItem";
-            this.saveAsAAI2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveAsAAI2ToolStripMenuItem.Text = "Save As AAI2 Ipnce";
-            this.saveAsAAI2ToolStripMenuItem.Click += new System.EventHandler(this.saveAsAAI2ToolStripMenuItem_Click);
-            // 
-            // saveAsAAIToolStripMenuItem
-            // 
-            this.saveAsAAIToolStripMenuItem.Name = "saveAsAAIToolStripMenuItem";
-            this.saveAsAAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveAsAAIToolStripMenuItem.Text = "Save As AAI Ipnce";
-            this.saveAsAAIToolStripMenuItem.Click += new System.EventHandler(this.saveAsAAIToolStripMenuItem_Click);
-            // 
-            // saveAsAJToolStripMenuItem
-            // 
-            this.saveAsAJToolStripMenuItem.Name = "saveAsAJToolStripMenuItem";
-            this.saveAsAJToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveAsAJToolStripMenuItem.Text = "Save As AJ Ipnce";
-            this.saveAsAJToolStripMenuItem.Click += new System.EventHandler(this.saveAsAJToolStripMenuItem_Click);
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsAAI2ToolStripMenuItem,
-            this.saveAsAAIToolStripMenuItem,
-            this.saveAsAJToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.button5.Location = new System.Drawing.Point(417, 197);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(69, 47);
+            this.button5.TabIndex = 27;
+            this.button5.Text = "Save webp";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.ClientSize = new System.Drawing.Size(1213, 669);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label10);
@@ -437,6 +554,18 @@ namespace IpnceEditor
         private System.Windows.Forms.ToolStripMenuItem saveAsAAI2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsAAIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsAJToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spriteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spritePartToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem animToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem animKeyframeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem backgroundToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setBackgroundImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetBackgroundImageToolStripMenuItem;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ToolStripMenuItem setGreenScreenToolStripMenuItem;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace IpnceEditor
 {
@@ -12,6 +13,7 @@ namespace IpnceEditor
         public bool flipped;
         public byte[] header;
         public IpnceAdapter adapt;
+        public string IpnceName;
 
         public Manager()
         {
@@ -22,6 +24,11 @@ namespace IpnceEditor
         {
             this.ipncePath = _path;
             this.Load();
+        }
+
+        public bool HDCheck()
+        {
+            return !ipnce.IsHD || (IpnceName.IndexOf("chr") == 0 && !IpnceName.Contains("chrBust"));
         }
 
         public string GetIpnce()
@@ -45,6 +52,12 @@ namespace IpnceEditor
             {
                 header[i] = bytes[i];
             }
+            byte[] namedata = new byte[bytes[28]];
+            for (int i = 0; i < namedata.Length; i++)
+            {
+                namedata[i] = bytes[32 + i];
+            }
+            IpnceName = Encoding.UTF8.GetString(namedata);
             this.adapt = MakeAdapter(bytes[20]); //choosing what ipnce this is
             using (BinaryReader br = new BinaryReader(new MemoryStream(data)))
             {
@@ -194,6 +207,26 @@ namespace IpnceEditor
                     max = ipnce.AnimList[inds[i]].TotalFrameSize;
             }
             return max;
+        }
+
+        public void AddSprite()
+        {
+            ipnce.AddSprite();
+        }
+
+        public void AddAnim()
+        {
+            ipnce.AddAnim();
+        }
+
+        public void AddSpriteParts(int ind)
+        {
+            ipnce.AddSpriteParts(ind);
+        }
+
+        public void AddAnimKeyframe(int ind)
+        {
+            ipnce.AddAnimKeyframe(ind);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IpnceEditor
 {
@@ -99,6 +102,30 @@ namespace IpnceEditor
 				AnimList[i].Save(bw);
 			}
 		}
+
+		public void AddSprite()
+		{
+			List<Sprite> list = SpriteList.ToList<Sprite>();
+			list.Add(Sprite.CreateEmpty());
+			SpriteList = list.ToArray();
+		}
+
+		public void AddAnim()
+		{
+			List<Anim> list = AnimList.ToList<Anim>();
+			list.Add(Anim.CreateEmpty());
+			AnimList = list.ToArray();
+		}
+
+		public void AddSpriteParts(int ind)
+        {
+			SpriteList[ind].AddSpriteParts();
+		}
+
+		public void AddAnimKeyframe(int ind)
+		{
+			AnimList[ind].AddAnimKeyframe();
+		}
 	}
 	public class Sprite
 	{
@@ -142,6 +169,24 @@ namespace IpnceEditor
 				Parts[i].Save(bw);
             }
         }
+
+		public static Sprite CreateEmpty()
+		{
+			Sprite sp = new Sprite();
+			sp.DestX = 0;
+			sp.DestY = 0;
+			sp.IsBlend = false;
+			sp.Parts = new SpriteParts[1];
+			sp.Parts[0] = SpriteParts.CreateEmpty();
+			return sp;
+		}
+
+		public void AddSpriteParts()
+		{
+			List<SpriteParts> list = Parts.ToList<SpriteParts>();
+			list.Add(SpriteParts.CreateEmpty());
+			Parts = list.ToArray();
+		}
 	}
 	public class SpriteParts
 	{
@@ -191,6 +236,21 @@ namespace IpnceEditor
 			bw.Write((int)Priority);
 			bw.Write((int)ColorPlteNum);
 		}
+
+		public static SpriteParts CreateEmpty()
+        {
+			SpriteParts sp = new SpriteParts();
+			sp.DestX = 0;
+			sp.DestY = 0;
+			sp.SrcX = 0;
+			sp.SrcY = 0;
+			sp.Width = 0;
+			sp.Height = 0;
+			sp.Flag = 0;
+			sp.Priority = 0;
+			sp.ColorPlteNum = 0;
+			return sp;
+        }
 	}
 	public class Anim
 	{
@@ -245,6 +305,28 @@ namespace IpnceEditor
 				KeyFrames[i].Save(bw);
 			}
 		}
+
+		public static Anim CreateEmpty()
+		{
+			Anim an = new Anim();
+			an.KeySize = 1;
+			an.TotalFrameSize = 1;
+			an.RestartFrame = 0;
+			an.DestX = 0;
+			an.DestY = 0;
+			an.Flag = 0;
+			an.KeyFrames = new AnimKeyframe[1];
+			an.KeyFrames[0] = AnimKeyframe.CreateEmpty();
+			return an;
+		}
+
+		public void AddAnimKeyframe()
+        {
+			KeySize++;
+			List<AnimKeyframe> list = KeyFrames.ToList<AnimKeyframe>();
+			list.Add(AnimKeyframe.CreateEmpty());
+			KeyFrames = list.ToArray();
+        }
 	}
 	public class AnimKeyframe
 	{
@@ -285,6 +367,20 @@ namespace IpnceEditor
 			bw.Write(TranslateX);
 			bw.Write(TranslateY);
 			bw.Write(Attribute);
+		}
+
+		public static AnimKeyframe CreateEmpty()
+		{
+			AnimKeyframe an = new AnimKeyframe();
+			an.Frame = 0;
+			an.Index = 0;
+			an.Rotate = 0;
+			an.ScaleX = 1;
+			an.ScaleY = 1;
+			an.TranslateX = 0;
+			an.TranslateY = 0;
+			an.Attribute = 0;
+			return an;
 		}
 	}
 	public class Texture2D //I don't really know what these params mean, so I just saved them as 3 ints

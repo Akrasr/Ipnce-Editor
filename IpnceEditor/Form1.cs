@@ -23,6 +23,11 @@ namespace IpnceEditor
             saveAsAJToolStripMenuItem.Enabled = false;
             saveAsAAI2ToolStripMenuItem.Enabled = false;
             saveAsAAIToolStripMenuItem.Enabled = false;
+            backgroundToolStripMenuItem.Enabled = false;
+            addToolStripMenuItem.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
+            button5.Enabled = false;
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -157,6 +162,13 @@ namespace IpnceEditor
             saveAsAJToolStripMenuItem.Enabled = true;
             saveAsAAI2ToolStripMenuItem.Enabled = true;
             saveAsAAIToolStripMenuItem.Enabled = true;
+            addToolStripMenuItem.Enabled = true;
+            spriteToolStripMenuItem.Enabled = true;
+            spritePartToolStripMenuItem.Enabled = false;
+            animToolStripMenuItem.Enabled = true;
+            animKeyframeToolStripMenuItem.Enabled = false;
+            backgroundToolStripMenuItem.Enabled = true;
+            button3.Enabled = true;
         }
 
         public void SetMainObjects(string atlasPath, string palettePath)
@@ -165,9 +177,50 @@ namespace IpnceEditor
             manager.atlasPath = atlasPath;
             manager.palettePath = palettePath;
             EnableAll();
-            id = new IpnceDrawer(gr, manager.ipnce, trackBar1, Image.FromFile(manager.atlasPath), palette, manager.flipped);
+            id = new IpnceDrawer(gr, manager.ipnce, trackBar1, Image.FromFile(manager.atlasPath), palette, manager.flipped, manager.HDCheck());
             UpdateData();
             id.ShowTest();
+        }
+
+        private void SaveScreenshot()
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = @"PNG|*.png" })
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    id.SaveScreenshot(pictureBox1, saveFileDialog.FileName);
+                }
+            }
+        }
+
+        private void SaveGIF()
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = @"GIF|*.gif" })
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+
+                    int[] inds = GetIndexes(checkedListBox1);
+                    int frs = manager.MaxFrames(inds);
+                    id.SaveGIF(inds, frs, saveFileDialog.FileName, false);
+                    //id.SaveScreenshot(pictureBox1, saveFileDialog.FileName);
+                }
+            }
+        }
+
+        private void SaveSeq()
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = @"Webp|*.webp" })
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+
+                    int[] inds = GetIndexes(checkedListBox1);
+                    int frs = manager.MaxFrames(inds);
+                    id.SaveGIF(inds, frs, saveFileDialog.FileName, true);
+                    //id.SaveScreenshot(pictureBox1, saveFileDialog.FileName);
+                }
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,6 +257,7 @@ namespace IpnceEditor
             UpdateIpnceData();
             LoadAnimList();
             LoadSpriteList();
+            this.Text = "Ipnce Editor " + manager.IpnceName;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -230,6 +284,70 @@ namespace IpnceEditor
             this.listBox1.Items.AddRange(manager.GetSpriteList());
         }
 
+        private void AddSprite()
+        {
+            manager.AddSprite();
+            LoadSpriteList();
+            id.AddSprite();
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+        }
+
+        private void AddSpriteParts()
+        {
+            int ind = listBox1.SelectedIndex;
+            manager.AddSpriteParts(ind);
+            id.AddSpriteParts(ind);
+            listBox1_SelectedIndexChanged(new object(), new EventArgs());
+            listBox2.SelectedIndex = listBox2.Items.Count - 1;
+        }
+
+        private void AddAnim()
+        {
+            manager.AddAnim();
+            LoadAnimList();
+            listBox3.SelectedIndex = listBox3.Items.Count - 1;
+        }
+
+        private void AddAnimKeyframe()
+        {
+            int ind = listBox3.SelectedIndex;
+            manager.AddAnimKeyframe(ind);
+            listBox3_SelectedIndexChanged(new object(), new EventArgs());
+            listBox4.SelectedIndex = listBox4.Items.Count - 1;
+        }
+
+        private void SetBackgroundImage()
+        {
+            string bgPath = String.Empty;
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Title = "Open Background Image";
+                openFileDialog.Filter = "Image files (*.png, *.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    bgPath = openFileDialog.FileName;
+                }
+            }
+            try
+            {
+                Image img = Image.FromFile(bgPath); //Attempt to load an image
+                img.Dispose();
+            }
+            catch
+            {
+                MessageBox.Show("The file is invalid");
+                return;
+            }
+            id.SetBackgroundImage(Image.FromFile(bgPath));
+        }
+
+        private void ResetBackgroundImage()
+        {
+            id.ResetBackgroundImage();
+        }
+
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ind = listBox1.SelectedIndex; //showing sprite data
@@ -237,6 +355,7 @@ namespace IpnceEditor
             listBox2.Items.AddRange(manager.GetSpritePartsList(ind));
             LoadParamsSprite();
             id.DrawSpriteCl(ind);
+            spritePartToolStripMenuItem.Enabled = true;
         }
 
         private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -245,6 +364,7 @@ namespace IpnceEditor
             listBox4.Items.Clear();
             listBox4.Items.AddRange(manager.GetAnimKeyList(ind));
             LoadParamsAnim();
+            animKeyframeToolStripMenuItem.Enabled = true;
         }
 
         private void LoadParamsSprite()
@@ -817,11 +937,15 @@ namespace IpnceEditor
                 trackBar1.Enabled = false; //Unselecting all animations
                 button1.Enabled = false;
                 trackBar1.Maximum = 10;
+                button4.Enabled = false;
+                button5.Enabled = false;
             }
             else
             {
                 trackBar1.Enabled = true; //Selecting an animation that user wants to play
                 button1.Enabled = true;
+                button4.Enabled = true;
+                button5.Enabled = true;
                 int frs = manager.MaxFrames(inds);
                 trackBar1.Maximum = frs;
             }
@@ -858,16 +982,21 @@ namespace IpnceEditor
         {
             int frames = trackBar1.Maximum;
             bool b = false;
-            for (int i = 0; i < frames; i++)
+            for (int i = 0; i <= frames; i++)
             {
                 if (!played)
                 {
                     b = true;
-                    break;
+                    return;
                 }
                 await Task.Delay(20); //delay for optimisation
                 trackBar1.Value = i;
                 trackBar1_Scroll(trackBar1, new EventArgs());
+            }
+            if (id.GetLoop(GetIndexes(checkedListBox1)))
+            {
+                Play();
+                b = true;
             }
             if (!b)
             {
@@ -962,6 +1091,56 @@ namespace IpnceEditor
             }
             manager.SaveAsAJ(filpath);
             MessageBox.Show("Don't forget to copy header bytes \nfrom Ipnce that you want to replace and\ninsert this bytes in the saved file.");
+        }
+
+        private void spriteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddSprite();
+        }
+
+        private void spritePartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddSpriteParts();
+        }
+
+        private void animToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddAnim();
+        }
+
+        private void animKeyframeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddAnimKeyframe();
+        }
+
+        private void setBackgroundImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetBackgroundImage();
+        }
+
+        private void resetBackgroundImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetBackgroundImage();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveScreenshot();
+        }
+
+        private void setGreenScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            id.SetGreenScreenBackground();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SaveGIF();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SaveSeq();
         }
     }
 }
