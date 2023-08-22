@@ -1,6 +1,9 @@
 # Ipnce-Editor
 Animation editing tool for mobile ports of Ace Attorney games (AJ, AAI, AAI2)
 
+# Build notes
+Gif and webp export functions need GifAnimation.dll and ffmpeg.exe files to work.
+
 # What is Ipnce and how does it work?
 As you may probably know, Nintendo DS uses four types of files to draw an image properly:
 1. NCGR (an uncolored tile image)
