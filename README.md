@@ -1,5 +1,5 @@
 # Ipnce-Editor
-Animation editing tool for mobile ports of Ace Attorney games (AJ, AAI, AAI2)
+Animation editing tool for mobile ports of Ace Attorney games (AJ, AAI, AAI2), Ace Attorney Investigations Collection and AAI2 DS.
 
 # Build notes
 Gif and webp export functions need GifAnimation.dll and ffmpeg.exe files to work.
