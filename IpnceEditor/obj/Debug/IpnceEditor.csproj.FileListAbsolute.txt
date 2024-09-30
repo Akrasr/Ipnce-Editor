@@ -12,3 +12,17 @@ C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\AnimatedGif.dll
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\bin\Debug\System.Drawing.Common.dll
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.CopyComplete
 C:\Users\userpc\source\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.Form2.resources
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.exe.config
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.exe
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\bin\Debug\IpnceEditor.pdb
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\bin\Debug\AnimatedGif.dll
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\bin\Debug\System.Drawing.Common.dll
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.AssemblyReference.cache
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.Properties.Resources.resources
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.GenerateResource.cache
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.csproj.CoreCompileInputs.cache
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEdi.58C52621.Up2Date
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.exe
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.pdb
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.GUI.Form1.resources
+C:\Users\Akrasr\Documents\repos\IpnceEditor\IpnceEditor\obj\Debug\IpnceEditor.GUI.Form2.resources

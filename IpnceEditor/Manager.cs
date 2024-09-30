@@ -1,232 +1,244 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
+using IpnceEditor.Interfaces;
+using IpnceEditor.NDS.ObjectManagers;
+using IpnceEditor.UnityIpnce.ObjectManagers;
 
 namespace IpnceEditor
 {
     class Manager
     {
-        public Ipnce ipnce;
         public string ipncePath;
         public string atlasPath;
         public string palettePath;
         public bool flipped;
-        public byte[] header;
-        public IpnceAdapter adapt;
-        public string IpnceName;
+        public static bool AAI1 = false;
+        public NitroObjectManager objmanager;
+        public AnimationType animationtype;
 
-        public Manager()
+        public Manager() { }
+
+        public Manager(string path)
         {
-            this.ipnce = new Ipnce();
+            animationtype = GetAnimationType(path);
+            objmanager = GetObjectManager(path);
+            objmanager.GetNeededFiles();
         }
 
-        public void SetIpnce(string _path)
+        public NitroObjectManager GetObjectManager(string path)
         {
-            this.ipncePath = _path;
-            this.Load();
-        }
-
-        public bool HDCheck()
-        {
-            return !ipnce.IsHD || (IpnceName.IndexOf("chr") == 0 && !IpnceName.Contains("chrBust"));
-        }
-
-        public string GetIpnce()
-        {
-            return this.ipncePath;
-        }
-
-        public void Load()
-        {
-            byte[] bytes = File.ReadAllBytes(this.ipncePath); //reading header
-            int name = 4 + bytes[28] - bytes[28] % 4;
-            if (bytes[28] % 4 == 0)
-                name -= 4;
-            byte[] data = new byte[bytes.Length - 32 - name];
-            for (int i = 0; i < data.Length; i++)
+            switch (animationtype)
             {
-                data[i] = bytes[32 + name + i];
+                case AnimationType.Ipnce:
+                    return new HDIpnceManager(path);
+                case AnimationType.NitroCel:
+                    return new NDSCellManager(path);
+                case AnimationType.AAIIpnce:
+                    return new AAIIpnceManager(path);
+                case AnimationType.AJIpnce:
+                    return new AJIpnceManager(path);
+                case AnimationType.CollectionAAI1Ipnce:
+                    return new CollectionAAI1Manager(path);
+                case AnimationType.CollectionAAI2Ipnce:
+                    return new CollectionIpnceManager(path);
+                default:
+                    return new NDSCellManager(path);
             }
-            header = new byte[32 + name];
-            for (int i = 0; i < header.Length; i++)
+        }
+
+        public AnimationType GetAnimationType(string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                header[i] = bytes[i];
-            }
-            byte[] namedata = new byte[bytes[28]];
-            for (int i = 0; i < namedata.Length; i++)
-            {
-                namedata[i] = bytes[32 + i];
-            }
-            IpnceName = Encoding.UTF8.GetString(namedata);
-            this.adapt = MakeAdapter(bytes[20]); //choosing what ipnce this is
-            using (BinaryReader br = new BinaryReader(new MemoryStream(data)))
-            {
-                this.ipnce = adapt.Load(br);
-                bool cor = true;
-                try
+                using (BinaryReader br = new BinaryReader(fs))
                 {
-                    int d = br.ReadInt32();
-                    cor = false;
-                } catch { }
-                if (!cor)
-                {
-                    throw new Exception("Invalid File");
+                    int magic = br.ReadInt32();
+                    if (magic == 0)
+                    {
+                        br.BaseStream.Position += 0x10;
+                        int classpath = br.ReadInt32();
+                        if (classpath == 0xbf)
+                        {
+                            return AnimationType.AAIIpnce;
+                        }
+                        else if (classpath == 0x6b)
+                        {
+                            return AnimationType.AJIpnce;
+                        }
+                        else if (classpath == 0x73a544e8)
+                        {
+                            return AnimationType.CollectionAAI1Ipnce;
+                        }
+                        else if (classpath == 0x6c415d67)
+                        {
+                            return AnimationType.CollectionAAI2Ipnce;
+                        }
+                        return AnimationType.Ipnce;
+                    }
+                    else return AnimationType.NitroCel;
                 }
             }
         }
 
-        public IpnceAdapter MakeAdapter(byte id)
+        public void SetIpnce(string _path)
         {
-            if (id == 191)
-            {
-                flipped = true;
-                return new AAIAdapter();
-            }
-            else if (id == 244)
-            {
-                flipped = false;
-                return new AAI2Adapter();
-            }
-            else if (id == 107)
-            {
-                flipped = true;
-                return new AJAdapter();
-            }
-            else
-                throw new Exception("Invalid ID");
+            animationtype = GetAnimationType(_path);
+            objmanager = GetObjectManager(_path);
+            objmanager.GetNeededFiles();
+        }
+
+        public bool HDCheck()
+        {
+            return objmanager.HDCheck();
         }
 
         public void Save()
         {
-            SaveAs(this.ipncePath);
+            objmanager.Save();
         }
 
-        public void SaveAs(string _path)
+        public void SaveAs()
         {
-            using (BinaryWriter bw = new BinaryWriter(new FileStream(_path, FileMode.OpenOrCreate, FileAccess.Write)))
-            {
-                bw.Write(header);
-                adapt.Save(ipnce, bw);
-            }
+            objmanager.SaveAs();
         }
 
-        public void SaveAsAAI2(string _path)
+        public void SaveAsCollectionAAI1Ipnce()
         {
-            using (BinaryWriter bw = new BinaryWriter(new FileStream(_path, FileMode.OpenOrCreate, FileAccess.Write)))
-            {
-                byte r = header[20];
-                header[20] = 244;
-                bw.Write(header);
-                header[20] = r;
-                new AAI2Adapter().Save(ipnce, bw);
-            }
+            objmanager.SaveAsCollectionAAI1Ipnce();
         }
 
-        public void SaveAsAAI(string _path)
+        public void SaveAsCollectionIpnce()
         {
-            using (BinaryWriter bw = new BinaryWriter(new FileStream(_path, FileMode.OpenOrCreate, FileAccess.Write)))
-            {
-                byte r = header[20];
-                header[20] = 191;
-                bw.Write(header);
-                header[20] = r;
-                new AAIAdapter().Save(ipnce, bw);
-            }
+            objmanager.SaveAsCollectionIpnce();
         }
 
-        public void SaveAsAJ(string _path)
+        public void SaveAsAAI2()
         {
-            using (BinaryWriter bw = new BinaryWriter(new FileStream(_path, FileMode.OpenOrCreate, FileAccess.Write)))
-            {
-                byte r = header[20];
-                header[20] = 107;
-                bw.Write(header);
-                header[20] = r;
-                new AJAdapter().Save(ipnce, bw);
-            }
+            objmanager.SaveAsAAI2();
+        }
+
+        public void SaveAsAAI()
+        {
+            objmanager.SaveAsAAI();
+        }
+
+        public void SaveAsAJ()
+        {
+            objmanager.SaveAsAJ();
+        }
+
+        public void SaveAsDS()
+        {
+            objmanager.SaveAsDS();
         }
 
         //getting items for listboxes in form
 
+        public string GetIpnceName()
+        {
+            return objmanager.GetIpnceName();
+        }
+
         public string[] GetAtlasList()
         {
-            string[] res = new string[ipnce.SpriteAtlas.Length];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = "SpriteAtlas[" + i + "]";
-            }
-            return res;
+            return objmanager.GetAtlasList();
         }
         public string[] GetSpriteList()
         {
-            string[] res = new string[ipnce.SpriteList.Length];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = "SpriteList[" + i + "]";
-            }
-            return res;
+            return objmanager.GetSpriteList();
         }
         public string[] GetAnimList()
         {
-            string[] res = new string[ipnce.AnimList.Length];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = "AnimList[" + i + "]";
-            }
-            return res;
+            return objmanager.GetAnimList();
         }
 
         public string[] GetSpritePartsList(int ind)
         {
-            string[] res = new string[ipnce.SpriteList[ind].Parts.Length];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = "Parts[" + i + "]";
-            }
-            return res;
+            return objmanager.GetSpritePartsList(ind);
         }
 
         public string[] GetAnimKeyList(int ind)
         {
-            string[] res = new string[ipnce.AnimList[ind].KeyFrames.Length];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = "KeyFrames[" + i + "]";
-            }
-            return res;
+            return objmanager.GetAnimKeyList(ind);
+        }
+
+        public bool GetUsePalette()
+        {
+            return objmanager.GetUsePalette();
+        }
+
+        public bool GetOffScreenRendering()
+        {
+            return objmanager.GetOffScreenRendering();
+        }
+
+        public int GetColorPaletteNum()
+        {
+            return objmanager.GetColorPaletteNum();
         }
 
         //finding an amount of frames for selected animations
 
         public int MaxFrames(int[] inds)
         {
-            int max = 0;
-            for (int i = 0; i < inds.Length; i++)
-            {
-                if (ipnce.AnimList[inds[i]].TotalFrameSize > max)
-                    max = ipnce.AnimList[inds[i]].TotalFrameSize;
-            }
-            return max;
+            return objmanager.MaxFrames(inds);
         }
 
         public void AddSprite()
         {
-            ipnce.AddSprite();
+            objmanager.AddSprite();
         }
 
         public void AddAnim()
         {
-            ipnce.AddAnim();
+            objmanager.AddAnim();
         }
 
         public void AddSpriteParts(int ind)
         {
-            ipnce.AddSpriteParts(ind);
+            objmanager.AddSpriteParts(ind);
         }
 
         public void AddAnimKeyframe(int ind)
         {
-            ipnce.AddAnimKeyframe(ind);
+            objmanager.AddAnimKeyFrame(ind);
+        }
+
+        public NitroImageManager GetImageManager()
+        {
+            return objmanager.GetImageManager();
+        }
+
+        public void MakeControls(int ind)
+        {
+            objmanager.MakeControls(ind);
+        }
+
+        public void SetSpriteIndex(int ind)
+        {
+            objmanager.spriteIndex = ind;
+        }
+
+        public void SetSpritePartIndex(int ind)
+        {
+            objmanager.spritePartIndex = ind;
+        }
+
+        public void SetAnimIndex(int ind)
+        {
+            objmanager.animIndex = ind;
+        }
+
+        public void SetAnimFrameIndex(int ind)
+        {
+            objmanager.animFrameIndex = ind;
+        }
+
+        public void SetGroupBox(GroupBox box)
+        {
+            objmanager.SetGroupBox(box);
         }
     }
 }
